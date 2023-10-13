@@ -1,0 +1,14 @@
+version: "2"
+services:
+  datanode:
+    container_name: datanode1
+    image: apache/hadoop:3
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ../config/.env-node
+  nodemanager:
+    container_name: nodemanager1
+    image: apache/hadoop:3
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ../config/.env-node
