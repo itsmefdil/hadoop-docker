@@ -9,9 +9,12 @@ services:
       - 9870:9870
       - 9000:9000
     env_file:
-      - ../config/.env-master
+      - ../config/.env
     environment:
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+    networks:
+      hadoop:
+        ipv4_address: 192.168.100.2
 
   resourcemanager:
     container_name: resourcemanager
@@ -21,6 +24,16 @@ services:
     ports:
       - 8088:8088
     env_file:
-      - ../config/.env-master
+      - ../config/.env
     volumes:
       - ./test.sh:/opt/test.sh
+    networks:
+      hadoop:
+        ipv4_address: 192.168.100.3
+
+networks:
+  hadoop:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24

@@ -5,10 +5,21 @@ services:
     image: apache/hadoop:3
     command: ["hdfs", "datanode"]
     env_file:
-      - ../config/.env-node
+      - ../config/.env
+    networks:
+      master_hadoop:
+        ipv4_address: 192.168.100.4
+
   nodemanager:
     container_name: nodemanager1
     image: apache/hadoop:3
     command: ["yarn", "nodemanager"]
     env_file:
-      - ../config/.env-node
+      - ../config/.env
+    networks:
+      master_hadoop:
+        ipv4_address: 192.168.100.5
+
+networks:
+  master_hadoop:
+    external: true
